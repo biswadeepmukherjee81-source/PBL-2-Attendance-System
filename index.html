@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PBL-2 Attendance System</title>
+    <title>Blockchain Attendance System</title>
 
     <style>
         body {
@@ -15,10 +15,6 @@
             background: #2c3e50;
             color: white;
             padding: 20px;
-        }
-
-        .header h1 {
-            margin: 0;
         }
 
         .container {
@@ -42,7 +38,7 @@
 
         .card {
             background: white;
-            width: 320px;
+            width: 340px;
             margin: 20px auto;
             padding: 20px;
             border-radius: 10px;
@@ -75,67 +71,81 @@
 
 <div class="container">
     <button class="btn" onclick="openPPT()">View PPT</button>
-    <button class="btn" onclick="openPDF()">View Report</button>
 </div>
 
+<!-- Attendance Form -->
 <div class="card">
     <h3>Mark Attendance</h3>
+
+    <input type="number" id="roll" placeholder="Enter Roll Number">
+
     <input type="text" id="name" placeholder="Enter Name">
-    
+
+    <input type="text" id="subject" placeholder="Enter Subject">
+
     <select id="status">
-        <option>Present</option>
-        <option>Absent</option>
+        <option value="true">Present</option>
+        <option value="false">Absent</option>
     </select>
 
     <button class="btn" onclick="mark()">Submit</button>
+
     <p id="result"></p>
 </div>
 
+<!-- Percentage Section -->
 <div class="card">
-    <h3>Check Attendance %</h3>
-    <input type="number" id="roll" placeholder="Enter Roll">
-    
+    <h3>Check Attendance Percentage</h3>
+
+    <input type="number" id="checkRoll" placeholder="Enter Roll Number">
+
     <button class="btn" onclick="showPercentage()">Get Percentage</button>
+
     <p id="percentage"></p>
 </div>
 
 <footer>
-    <p>Developed for PBL-2 | Blockchain Project</p>
+    <p>PBL-2 Project | Blockchain Attendance System</p>
 </footer>
 
 <script>
+
+// Open PPT
 function openPPT() {
     window.open("ppt.pptx");
 }
 
-function openPDF() {
-    window.open("report.pdf");
-}
-
+// Mark Attendance (Frontend Demo)
 function mark() {
+    let roll = document.getElementById("roll").value;
     let name = document.getElementById("name").value;
+    let subject = document.getElementById("subject").value;
     let status = document.getElementById("status").value;
 
-    if(name === "") {
-        alert("Please enter name");
+    if (roll === "" || name === "" || subject === "") {
+        alert("Please fill all fields");
         return;
     }
 
     document.getElementById("result").innerText =
-        name + " marked as " + status;
+        "Roll " + roll + " (" + name + ") marked " +
+        (status === "true" ? "Present" : "Absent") +
+        " in " + subject;
 }
 
+// Show Percentage (Demo)
 function showPercentage() {
-    let roll = document.getElementById("roll").value;
+    let roll = document.getElementById("checkRoll").value;
 
-    if(roll === "") {
+    if (roll === "") {
         alert("Enter roll number");
         return;
     }
 
     document.getElementById("percentage").innerText =
-        "Percentage calculated using smart contract (demo)";
+        "Percentage calculated using smart contract logic (demo)";
 }
+
 </script>
 
 </body>
