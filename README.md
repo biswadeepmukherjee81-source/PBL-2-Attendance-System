@@ -10,19 +10,19 @@ The smart contract is developed using Solidity and tested using Remix IDE. A fro
 ---
 
 ## 🚀 Features
-- Secure attendance storage using blockchain logic
-- Subject-wise attendance recording
-- Automatic attendance percentage calculation
-- Performance analytics for students
-- Interactive and professional frontend interface
+- Secure attendance storage using blockchain logic  
+- Subject-wise attendance recording  
+- Automatic attendance percentage calculation  
+- Performance analytics for students  
+- Interactive and professional frontend interface  
 
 ---
 
 ## 🛠️ Technologies Used
-- Solidity (Smart Contract)
-- Remix IDE (Development & Testing)
-- HTML, CSS, JavaScript (Frontend)
-- GitHub Pages (Hosting)
+- Solidity (Smart Contract)  
+- Remix IDE (Development & Testing)  
+- HTML, CSS, JavaScript (Frontend)  
+- GitHub Pages (Hosting)  
 
 ---
 
@@ -35,11 +35,12 @@ The smart contract is developed using Solidity and tested using Remix IDE. A fro
 ---
 
 ## 📊 Sample Output
-Roll No | Name   | Attendance %
-------- | ------ | -------------
-101     | Amit   | 50%
-102     | Riya   | 100%
-103     | Rahul  | 100%
+
+| Roll No | Name  | Attendance % |
+|--------|------|-------------|
+| 101    | Amit | 50%         |
+| 102    | Riya | 100%        |
+| 103    | Rahul| 100%        |
 
 ---
 
