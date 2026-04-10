@@ -2,14 +2,141 @@
 <html>
 <head>
     <title>PBL-2 Attendance System</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(to right, #eef2f3, #8e9eab);
+            text-align: center;
+            margin: 0;
+        }
+
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .container {
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 6px;
+            background: #3498db;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+        }
+
+        .card {
+            background: white;
+            width: 320px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+        }
+
+        input, select {
+            width: 90%;
+            padding: 8px;
+            margin: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        footer {
+            margin-top: 40px;
+            padding: 10px;
+            background: #2c3e50;
+            color: white;
+        }
+    </style>
 </head>
-<body style="text-align:center; font-family:Arial; margin-top:50px;">
-    <h1>Blockchain-Based Attendance Management System</h1>
-    <p>Mid Term Evaluation - PBL 2</p>
-    <a href="PBL-2 MTE.pdf" target="_blank">
-        <button style="padding:10px 20px; font-size:16px;">
-            View Project PDF
-        </button>
-    </a>
+
+<body>
+
+<div class="header">
+    <h1>Blockchain Attendance System</h1>
+    <p>End Term (ETE) – Automated Analytics</p>
+</div>
+
+<div class="container">
+    <button class="btn" onclick="openPPT()">View PPT</button>
+    <button class="btn" onclick="openPDF()">View Report</button>
+</div>
+
+<div class="card">
+    <h3>Mark Attendance</h3>
+    <input type="text" id="name" placeholder="Enter Name">
+    
+    <select id="status">
+        <option>Present</option>
+        <option>Absent</option>
+    </select>
+
+    <button class="btn" onclick="mark()">Submit</button>
+    <p id="result"></p>
+</div>
+
+<div class="card">
+    <h3>Check Attendance %</h3>
+    <input type="number" id="roll" placeholder="Enter Roll">
+    
+    <button class="btn" onclick="showPercentage()">Get Percentage</button>
+    <p id="percentage"></p>
+</div>
+
+<footer>
+    <p>Developed for PBL-2 | Blockchain Project</p>
+</footer>
+
+<script>
+function openPPT() {
+    window.open("ppt.pptx");
+}
+
+function openPDF() {
+    window.open("report.pdf");
+}
+
+function mark() {
+    let name = document.getElementById("name").value;
+    let status = document.getElementById("status").value;
+
+    if(name === "") {
+        alert("Please enter name");
+        return;
+    }
+
+    document.getElementById("result").innerText =
+        name + " marked as " + status;
+}
+
+function showPercentage() {
+    let roll = document.getElementById("roll").value;
+
+    if(roll === "") {
+        alert("Enter roll number");
+        return;
+    }
+
+    document.getElementById("percentage").innerText =
+        "Percentage calculated using smart contract (demo)";
+}
+</script>
+
 </body>
 </html>
