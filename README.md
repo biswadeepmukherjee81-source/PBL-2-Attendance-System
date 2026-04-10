@@ -51,7 +51,11 @@ The smart contract is developed using Solidity and tested using Remix IDE. A fro
 ---
 
 ## 🔐 Smart Contract
-The smart contract is written in Solidity and tested using Remix IDE. It ensures secure and tamper-proof handling of attendance records.
+The smart contract is written in Solidity and stored in the file `Attendance.sol`. It contains the contract `AttendanceSystem`, which is responsible for storing attendance records and calculating attendance percentage.
+
+The contract uses structures and arrays to manage student attendance data securely. It ensures transparency and prevents data manipulation, demonstrating the use of blockchain for reliable record keeping.
+
+The smart contract was developed and tested using Remix IDE.
 
 ---
 
