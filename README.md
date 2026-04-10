@@ -63,4 +63,4 @@ The smart contract is written in Solidity and tested using Remix IDE. It ensures
 ---
 
 ## 👨‍💻 Author
-Biswadeep Mukherjee
+Bishwadeep Mukherjee
