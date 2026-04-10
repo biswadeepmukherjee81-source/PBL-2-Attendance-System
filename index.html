@@ -18,29 +18,19 @@
             box-shadow: 0px 2px 10px rgba(0,0,0,0.5);
         }
 
-        .header h1 {
-            margin: 0;
-            font-size: 28px;
-        }
-
-        .header p {
-            margin: 5px;
-            font-size: 14px;
-            color: #ddd;
-        }
-
         .container {
             display: flex;
-            flex-wrap: wrap;
             justify-content: center;
-            margin-top: 30px;
+            align-items: flex-start;
+            gap: 30px;
+            margin-top: 40px;
+            flex-wrap: wrap; /* important for smaller screens */
         }
 
         .card {
             background: white;
             color: black;
             width: 350px;
-            margin: 15px;
             padding: 20px;
             border-radius: 12px;
             box-shadow: 0px 8px 20px rgba(0,0,0,0.3);
@@ -61,7 +51,6 @@
             margin: 8px 0;
             border-radius: 6px;
             border: 1px solid #ccc;
-            font-size: 14px;
         }
 
         .btn {
@@ -72,9 +61,7 @@
             border-radius: 6px;
             background: #2a5298;
             color: white;
-            font-size: 15px;
             cursor: pointer;
-            transition: 0.3s;
         }
 
         .btn:hover {
@@ -83,8 +70,7 @@
 
         .output {
             margin-top: 10px;
-            font-weight: bold;
-            text-align: center;
+            font-size: 14px;
         }
 
         .note {
@@ -99,7 +85,6 @@
             padding: 15px;
             margin-top: 30px;
             background: rgba(0,0,0,0.4);
-            font-size: 13px;
         }
     </style>
 </head>
@@ -113,7 +98,7 @@
 
 <div class="container">
 
-    <!-- Attendance Card -->
+    <!-- LEFT CARD -->
     <div class="card">
         <h3>Mark Attendance</h3>
 
@@ -131,13 +116,13 @@
         <p class="output" id="result"></p>
     </div>
 
-    <!-- Percentage Card -->
+    <!-- RIGHT CARD -->
     <div class="card">
-        <h3>Check Attendance Percentage</h3>
+        <h3>Check Attendance</h3>
 
         <input type="number" id="checkRoll" placeholder="Enter Roll Number">
 
-        <button class="btn" onclick="showPercentage()">Get Percentage</button>
+        <button class="btn" onclick="showPercentage()">Get Details</button>
 
         <p class="output" id="percentage"></p>
     </div>
@@ -145,18 +130,17 @@
 </div>
 
 <p class="note">
-Prototype UI: Actual attendance logic is implemented using Solidity smart contract (tested in Remix IDE).
+Prototype UI: Actual logic implemented using Solidity smart contract (Remix IDE)
 </p>
 
 <footer>
-    Blockchain Attendance System | GitHub Hosted | Demo Version
+    Blockchain Attendance System | Demo Version
 </footer>
 
 <script>
 
 let records = [];
 
-// Mark Attendance
 function mark() {
     let roll = document.getElementById("roll").value;
     let name = document.getElementById("name").value;
@@ -176,11 +160,9 @@ function mark() {
     });
 
     document.getElementById("result").innerText =
-        "Attendance recorded for Roll " + roll;
-
+        "✔ Attendance recorded for Roll " + roll;
 }
 
-// Calculate Percentage
 function showPercentage() {
     let roll = document.getElementById("checkRoll").value;
 
@@ -191,18 +173,35 @@ function showPercentage() {
 
     let total = 0;
     let present = 0;
+    let name = "";
+    let subjects = [];
 
     for (let i = 0; i < records.length; i++) {
         if (records[i].roll == roll) {
             total++;
+            name = records[i].name;
+
+            subjects.push(
+                records[i].subject + " (" + (records[i].present ? "P" : "A") + ")"
+            );
+
             if (records[i].present) present++;
         }
     }
 
     let percentage = total === 0 ? 0 : Math.floor((present * 100) / total);
 
-    document.getElementById("percentage").innerText =
-        "Attendance: " + percentage + "%";
+    if (total === 0) {
+        document.getElementById("percentage").innerText = "No records found";
+        return;
+    }
+
+    document.getElementById("percentage").innerHTML =
+        "📌 Name: <b>" + name + "</b><br>" +
+        "📘 Subjects: " + subjects.join(", ") + "<br>" +
+        "✅ Present: " + present + "<br>" +
+        "❌ Absent: " + (total - present) + "<br>" +
+        "📊 Attendance: <b>" + percentage + "%</b>";
 }
 
 </script>
