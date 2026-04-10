@@ -5,59 +5,101 @@
 
     <style>
         body {
-            font-family: Arial;
-            background: linear-gradient(to right, #eef2f3, #8e9eab);
-            text-align: center;
+            font-family: 'Segoe UI', sans-serif;
             margin: 0;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
         }
 
         .header {
-            background: #2c3e50;
-            color: white;
-            padding: 20px;
+            text-align: center;
+            padding: 25px;
+            background: rgba(0,0,0,0.3);
+            box-shadow: 0px 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .header p {
+            margin: 5px;
+            font-size: 14px;
+            color: #ddd;
         }
 
         .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
             margin-top: 30px;
-        }
-
-        .btn {
-            padding: 12px 20px;
-            margin: 10px;
-            border: none;
-            border-radius: 6px;
-            background: #3498db;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            background: #2980b9;
         }
 
         .card {
             background: white;
-            width: 340px;
-            margin: 20px auto;
+            color: black;
+            width: 350px;
+            margin: 15px;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+            border-radius: 12px;
+            box-shadow: 0px 8px 20px rgba(0,0,0,0.3);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.03);
+        }
+
+        h3 {
+            text-align: center;
         }
 
         input, select {
-            width: 90%;
-            padding: 8px;
-            margin: 8px;
-            border-radius: 5px;
+            width: 95%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
             border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 6px;
+            background: #2a5298;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #1e3c72;
+        }
+
+        .output {
+            margin-top: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .note {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #ffdede;
         }
 
         footer {
-            margin-top: 40px;
-            padding: 10px;
-            background: #2c3e50;
-            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 30px;
+            background: rgba(0,0,0,0.4);
+            font-size: 13px;
         }
     </style>
 </head>
@@ -65,57 +107,56 @@
 <body>
 
 <div class="header">
-    <h1>Blockchain Attendance System</h1>
-    <p>End Term (ETE) – Automated Analytics</p>
+    <h1>Blockchain-Based Attendance System</h1>
+    <p>Performance Analytics | PBL-2 End Term Project</p>
 </div>
 
 <div class="container">
-    <button class="btn" onclick="openPPT()">View PPT</button>
+
+    <!-- Attendance Card -->
+    <div class="card">
+        <h3>Mark Attendance</h3>
+
+        <input type="number" id="roll" placeholder="Enter Roll Number">
+        <input type="text" id="name" placeholder="Enter Name">
+        <input type="text" id="subject" placeholder="Enter Subject">
+
+        <select id="status">
+            <option value="true">Present</option>
+            <option value="false">Absent</option>
+        </select>
+
+        <button class="btn" onclick="mark()">Submit</button>
+
+        <p class="output" id="result"></p>
+    </div>
+
+    <!-- Percentage Card -->
+    <div class="card">
+        <h3>Check Attendance Percentage</h3>
+
+        <input type="number" id="checkRoll" placeholder="Enter Roll Number">
+
+        <button class="btn" onclick="showPercentage()">Get Percentage</button>
+
+        <p class="output" id="percentage"></p>
+    </div>
+
 </div>
 
-<!-- Attendance Form -->
-<div class="card">
-    <h3>Mark Attendance</h3>
-
-    <input type="number" id="roll" placeholder="Enter Roll Number">
-
-    <input type="text" id="name" placeholder="Enter Name">
-
-    <input type="text" id="subject" placeholder="Enter Subject">
-
-    <select id="status">
-        <option value="true">Present</option>
-        <option value="false">Absent</option>
-    </select>
-
-    <button class="btn" onclick="mark()">Submit</button>
-
-    <p id="result"></p>
-</div>
-
-<!-- Percentage Section -->
-<div class="card">
-    <h3>Check Attendance Percentage</h3>
-
-    <input type="number" id="checkRoll" placeholder="Enter Roll Number">
-
-    <button class="btn" onclick="showPercentage()">Get Percentage</button>
-
-    <p id="percentage"></p>
-</div>
+<p class="note">
+Prototype UI: Actual attendance logic is implemented using Solidity smart contract (tested in Remix IDE).
+</p>
 
 <footer>
-    <p>PBL-2 Project | Blockchain Attendance System</p>
+    Blockchain Attendance System | GitHub Hosted | Demo Version
 </footer>
 
 <script>
 
-// Open PPT
-function openPPT() {
-    window.open("ppt.pptx");
-}
+let records = [];
 
-// Mark Attendance (Frontend Demo)
+// Mark Attendance
 function mark() {
     let roll = document.getElementById("roll").value;
     let name = document.getElementById("name").value;
@@ -127,13 +168,19 @@ function mark() {
         return;
     }
 
+    records.push({
+        roll: roll,
+        name: name,
+        subject: subject,
+        present: status === "true"
+    });
+
     document.getElementById("result").innerText =
-        "Roll " + roll + " (" + name + ") marked " +
-        (status === "true" ? "Present" : "Absent") +
-        " in " + subject;
+        "Attendance recorded for Roll " + roll;
+
 }
 
-// Show Percentage (Demo)
+// Calculate Percentage
 function showPercentage() {
     let roll = document.getElementById("checkRoll").value;
 
@@ -142,8 +189,20 @@ function showPercentage() {
         return;
     }
 
+    let total = 0;
+    let present = 0;
+
+    for (let i = 0; i < records.length; i++) {
+        if (records[i].roll == roll) {
+            total++;
+            if (records[i].present) present++;
+        }
+    }
+
+    let percentage = total === 0 ? 0 : Math.floor((present * 100) / total);
+
     document.getElementById("percentage").innerText =
-        "Percentage calculated using smart contract logic (demo)";
+        "Attendance: " + percentage + "%";
 }
 
 </script>
